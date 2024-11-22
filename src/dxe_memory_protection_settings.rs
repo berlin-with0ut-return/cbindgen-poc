@@ -20,12 +20,12 @@ impl EfiGuid {
     }
 }
 
-pub const HOB_DXE_MEMORY_PROTECTION_SETTINGS_GUID: EfiGuid = EfiGuid::new(
-    0x9ABFD639,
-    0xD1D0,
-    0x4EFF,
-    [0xBD, 0xB6, 0x7E, 0xC4, 0x19, 0x0D, 0x17, 0xD5],
-);
+pub const HOB_DXE_MEMORY_PROTECTION_SETTINGS_GUID: EfiGuid = EfiGuid {
+    data1: 0x9ABFD639,
+    data2: 0xD1D0,
+    data3: 0x4EFF,
+    data4: [0xBD, 0xB6, 0x7E, 0xC4, 0x19, 0x0D, 0x17, 0xD5],
+};
 
 #[repr(C)]
 #[derive(Clone, Copy)]
