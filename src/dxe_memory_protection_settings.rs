@@ -7,7 +7,8 @@ impl Guid {
     }
 }
 
-pub const HOB_DXE_MEMORY_PROTECTION_SETTINGS_GUID: Guid = Guid::new([
+#[no_mangle]
+pub static HOB_DXE_MEMORY_PROTECTION_SETTINGS_GUID: Guid = Guid::new([
     0x9A, 0xBF, 0xD6, 0x39, 0xD1, 0xD0, 0x4E, 0xFF, 0xBD, 0xB6, 0x7E, 0xC4, 0x19, 0x0D, 0x17, 0xD5,
 ]);
 
@@ -142,6 +143,7 @@ pub struct DxeMemoryProtectionSettings {
 pub const HEAP_GUARD_ALIGNED_TO_TAIL: u8 = 0;
 pub const HEAP_GUARD_ALIGNED_TO_HEAD: u8 = 1;
 
+// we need an extern C function to force cbindgen to generate headers
 #[no_mangle]
 #[cfg(feature = "cbindgen")]
 pub extern "C" fn ship_mode_no_page_guard_settings() -> DxeMemoryProtectionSettings {
@@ -164,3 +166,26 @@ pub extern "C" fn ship_mode_no_page_guard_settings() -> DxeMemoryProtectionSetti
         install_memory_attribute_protocol: true,
     }
 }
+
+#[no_mangle]
+#[cfg(feature = "cbindgen")]
+pub static DXE_MEMORY_PROTECTION_SETTINGS_SHIP_MODE_NO_PAGE_GUARDS: DxeMemoryProtectionSettings =
+    DxeMemoryProtectionSettings {
+        struct_version: DXE_MEMORY_PROTECTION_SETTINGS_CURRENT_VERSION,
+        cpu_stack_guard: true,
+        free_memory_read_protected: true,
+        null_pointer_detection_policy: DxeNullDetectionPolicy {
+            fields: NullDetectionFields {
+                uefi_null_detection: 1,
+                disable_end_of_dxe: 0,
+                disable_ready_to_boot: 0,
+            },
+        },
+        heap_guard_policy: DxeHeapGuardPolicy { data: 0 },
+        image_protection_policy: DxeImageProtectionPolicy { data: 0 },
+        heap_guard_pool_type: DxeHeapGuardMemoryTypes { data: 0 },
+        heap_guard_page_type: DxeHeapGuardMemoryTypes { data: 0 },
+        nx_protection_policy: DxeHeapGuardMemoryTypes { data: 0 },
+        stack_cookies: true,
+        install_memory_attribute_protocol: true,
+    };

@@ -9,6 +9,8 @@
 
 #define HEAP_GUARD_ALIGNED_TO_TAIL 0
 
+typedef struct Guid Guid;
+
 typedef uint8_t DxeMemoryProtectionSettingsVersion;
 
 typedef struct NullDetectionFields {
@@ -86,5 +88,9 @@ typedef struct DxeMemoryProtectionSettings {
 } DxeMemoryProtectionSettings;
 
 #define DXE_MEMORY_PROTECTION_SETTINGS_CURRENT_VERSION 7
+
+extern const struct DxeMemoryProtectionSettings DXE_MEMORY_PROTECTION_SETTINGS_SHIP_MODE_NO_PAGE_GUARDS;
+
+extern const struct Guid HOB_DXE_MEMORY_PROTECTION_SETTINGS_GUID;
 
 struct DxeMemoryProtectionSettings ship_mode_no_page_guard_settings(void);
