@@ -12,11 +12,10 @@
 typedef uint8_t DxeMemoryProtectionSettingsVersion;
 
 typedef struct NullDetectionFields {
-  uint8_t bits;
+  uint8_t uefi_null_detection: 1;
+  uint8_t disable_end_of_dxe: 1;
+  uint8_t disable_ready_to_boot: 1;
 } NullDetectionFields;
-#define NullDetectionFields_UEFI_NULL_DETECTION (NullDetectionFields){ .bits = (uint8_t)1 }
-#define NullDetectionFields_DISABLE_END_OF_DXE (NullDetectionFields){ .bits = (uint8_t)2 }
-#define NullDetectionFields_DISABLE_READY_TO_BOOT (NullDetectionFields){ .bits = (uint8_t)4 }
 
 typedef union DxeNullDetectionPolicy {
   uint8_t data;
@@ -24,11 +23,10 @@ typedef union DxeNullDetectionPolicy {
 } DxeNullDetectionPolicy;
 
 typedef struct HeapGuardFields {
-  uint8_t bits;
+  uint8_t uefi_page_guard: 1;
+  uint8_t uefi_pool_guard: 1;
+  uint8_t direction: 1;
 } HeapGuardFields;
-#define HeapGuardFields_UEFI_PAGE_GUARD (HeapGuardFields){ .bits = (uint8_t)1 }
-#define HeapGuardFields_UEFI_POOL_GUARD (HeapGuardFields){ .bits = (uint8_t)2 }
-#define HeapGuardFields_DIRECTION (HeapGuardFields){ .bits = (uint8_t)4 }
 
 typedef union DxeHeapGuardPolicy {
   uint8_t data;
@@ -36,12 +34,11 @@ typedef union DxeHeapGuardPolicy {
 } DxeHeapGuardPolicy;
 
 typedef struct ImageProtectionFields {
-  uint8_t bits;
+  uint8_t protect_image_from_unknown: 1;
+  uint8_t protect_image_from_fv: 1;
+  uint8_t raise_error_if_protection_fails: 1;
+  uint8_t block_images_without_nx_flag: 1;
 } ImageProtectionFields;
-#define ImageProtectionFields_PROTECT_IMAGE_FROM_UNKNOWN (ImageProtectionFields){ .bits = (uint8_t)1 }
-#define ImageProtectionFields_PROTECT_IMAGE_FROM_FV (ImageProtectionFields){ .bits = (uint8_t)2 }
-#define ImageProtectionFields_RAISE_ERROR_IF_PROTECTION_FAILS (ImageProtectionFields){ .bits = (uint8_t)4 }
-#define ImageProtectionFields_BLOCK_IMAGES_WITHOUT_NX_FLAG (ImageProtectionFields){ .bits = (uint8_t)8 }
 
 typedef union DxeImageProtectionPolicy {
   uint8_t data;
@@ -49,26 +46,25 @@ typedef union DxeImageProtectionPolicy {
 } DxeImageProtectionPolicy;
 
 typedef struct HeapGuardMemoryFields {
-  uint32_t bits;
+  uint8_t efi_reserved_memory_type: 1;
+  uint8_t efi_loader_code: 1;
+  uint8_t efi_loader_data: 1;
+  uint8_t efi_boot_services_code: 1;
+  uint8_t efi_boot_services_data: 1;
+  uint8_t efi_runtime_services_code: 1;
+  uint8_t efi_runtime_services_data: 1;
+  uint8_t efi_conventional_memory: 1;
+  uint8_t efi_unusable_memory: 1;
+  uint8_t efi_acpi_reclaim_memory: 1;
+  uint8_t efi_acpi_memory_nvs: 1;
+  uint8_t efi_memory_mapped_io: 1;
+  uint8_t efi_memory_mapped_io_port_space: 1;
+  uint8_t efi_pal_code: 1;
+  uint8_t efi_persistent_memory: 1;
+  uint8_t efi_unaccepted_memory_type: 1;
+  uint8_t oem_reserved: 1;
+  uint8_t os_reserved: 1;
 } HeapGuardMemoryFields;
-#define HeapGuardMemoryFields_EFI_RESERVED_MEMORY_TYPE (HeapGuardMemoryFields){ .bits = (uint32_t)1 }
-#define HeapGuardMemoryFields_EFI_LOADER_CODE (HeapGuardMemoryFields){ .bits = (uint32_t)2 }
-#define HeapGuardMemoryFields_EFI_LOADER_DATA (HeapGuardMemoryFields){ .bits = (uint32_t)4 }
-#define HeapGuardMemoryFields_EFI_BOOT_SERVICES_CODE (HeapGuardMemoryFields){ .bits = (uint32_t)8 }
-#define HeapGuardMemoryFields_EFI_BOOT_SERVICES_DATA (HeapGuardMemoryFields){ .bits = (uint32_t)16 }
-#define HeapGuardMemoryFields_EFI_RUNTIME_SERVICES_CODE (HeapGuardMemoryFields){ .bits = (uint32_t)32 }
-#define HeapGuardMemoryFields_EFI_RUNTIME_SERVICES_DATA (HeapGuardMemoryFields){ .bits = (uint32_t)64 }
-#define HeapGuardMemoryFields_EFI_CONVENTIONAL_MEMORY (HeapGuardMemoryFields){ .bits = (uint32_t)128 }
-#define HeapGuardMemoryFields_EFI_UNUSABLE_MEMORY (HeapGuardMemoryFields){ .bits = (uint32_t)256 }
-#define HeapGuardMemoryFields_EFI_ACPI_RECLAIM_MEMORY (HeapGuardMemoryFields){ .bits = (uint32_t)512 }
-#define HeapGuardMemoryFields_EFI_ACPI_MEMORY_NVS (HeapGuardMemoryFields){ .bits = (uint32_t)1024 }
-#define HeapGuardMemoryFields_EFI_MEMORY_MAPPED_IO (HeapGuardMemoryFields){ .bits = (uint32_t)2048 }
-#define HeapGuardMemoryFields_EFI_MEMORY_MAPPED_IO_PORT_SPACE (HeapGuardMemoryFields){ .bits = (uint32_t)4096 }
-#define HeapGuardMemoryFields_EFI_PAL_CODE (HeapGuardMemoryFields){ .bits = (uint32_t)8192 }
-#define HeapGuardMemoryFields_EFI_PERSISTENT_MEMORY (HeapGuardMemoryFields){ .bits = (uint32_t)16384 }
-#define HeapGuardMemoryFields_EFI_UNACCEPTED_MEMORY_TYPE (HeapGuardMemoryFields){ .bits = (uint32_t)32768 }
-#define HeapGuardMemoryFields_OEM_RESERVED (HeapGuardMemoryFields){ .bits = (uint32_t)65536 }
-#define HeapGuardMemoryFields_OS_RESERVED (HeapGuardMemoryFields){ .bits = (uint32_t)131072 }
 
 typedef union DxeHeapGuardMemoryTypes {
   uint32_t data;
@@ -91,10 +87,4 @@ typedef struct DxeMemoryProtectionSettings {
 
 #define DXE_MEMORY_PROTECTION_SETTINGS_CURRENT_VERSION 7
 
-struct DxeMemoryProtectionSettings debug_settings(void);
-
-struct DxeMemoryProtectionSettings protection_off_settings(void);
-
 struct DxeMemoryProtectionSettings ship_mode_no_page_guard_settings(void);
-
-struct DxeMemoryProtectionSettings ship_mode_settings(void);
