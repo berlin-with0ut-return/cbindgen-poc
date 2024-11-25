@@ -1,8 +1,10 @@
+use crate::inttypes::{UINT32, UINT8};
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
-pub struct Guid([u8; 16]);
+pub struct Guid([UINT8; 16]);
 
 impl Guid {
-    pub const fn new(data: [u8; 16]) -> Self {
+    pub const fn new(data: [UINT8; 16]) -> Self {
         Guid(data)
     }
 }
@@ -15,7 +17,7 @@ pub static HOB_DXE_MEMORY_PROTECTION_SETTINGS_GUID: Guid = Guid::new([
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub union DxeNullDetectionPolicy {
-    pub data: u8,
+    pub data: UINT8,
     pub fields: NullDetectionFields,
 }
 
@@ -24,17 +26,17 @@ pub union DxeNullDetectionPolicy {
 #[cfg(feature = "cbindgen")]
 pub struct NullDetectionFields {
     /// cbindgen:bitfield=1
-    pub uefi_null_detection: u8,
+    pub uefi_null_detection: UINT8,
     /// cbindgen:bitfield=1
-    pub disable_end_of_dxe: u8,
+    pub disable_end_of_dxe: UINT8,
     /// cbindgen:bitfield=1
-    pub disable_ready_to_boot: u8,
+    pub disable_ready_to_boot: UINT8,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub union DxeHeapGuardPolicy {
-    pub data: u8,
+    pub data: UINT8,
     pub fields: HeapGuardFields,
 }
 
@@ -43,17 +45,17 @@ pub union DxeHeapGuardPolicy {
 #[cfg(feature = "cbindgen")]
 pub struct HeapGuardFields {
     /// cbindgen:bitfield=1
-    pub uefi_page_guard: u8,
+    pub uefi_page_guard: UINT8,
     /// cbindgen:bitfield=1
-    pub uefi_pool_guard: u8,
+    pub uefi_pool_guard: UINT8,
     /// cbindgen:bitfield=1
-    pub direction: u8,
+    pub direction: UINT8,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub union DxeHeapGuardMemoryTypes {
-    pub data: u32,
+    pub data: UINT32,
     pub fields: HeapGuardMemoryFields,
 }
 
@@ -62,47 +64,47 @@ pub union DxeHeapGuardMemoryTypes {
 #[cfg(feature = "cbindgen")]
 pub struct HeapGuardMemoryFields {
     /// cbindgen:bitfield=1
-    pub efi_reserved_memory_type: u8,
+    pub efi_reserved_memory_type: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_loader_code: u8,
+    pub efi_loader_code: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_loader_data: u8,
+    pub efi_loader_data: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_boot_services_code: u8,
+    pub efi_boot_services_code: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_boot_services_data: u8,
+    pub efi_boot_services_data: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_runtime_services_code: u8,
+    pub efi_runtime_services_code: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_runtime_services_data: u8,
+    pub efi_runtime_services_data: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_conventional_memory: u8,
+    pub efi_conventional_memory: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_unusable_memory: u8,
+    pub efi_unusable_memory: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_acpi_reclaim_memory: u8,
+    pub efi_acpi_reclaim_memory: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_acpi_memory_nvs: u8,
+    pub efi_acpi_memory_nvs: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_memory_mapped_io: u8,
+    pub efi_memory_mapped_io: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_memory_mapped_io_port_space: u8,
+    pub efi_memory_mapped_io_port_space: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_pal_code: u8,
+    pub efi_pal_code: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_persistent_memory: u8,
+    pub efi_persistent_memory: UINT8,
     /// cbindgen:bitfield=1
-    pub efi_unaccepted_memory_type: u8,
+    pub efi_unaccepted_memory_type: UINT8,
     /// cbindgen:bitfield=1
-    pub oem_reserved: u8,
+    pub oem_reserved: UINT8,
     /// cbindgen:bitfield=1
-    pub os_reserved: u8,
+    pub os_reserved: UINT8,
 }
 
 #[repr(C)]
 #[derive(Clone, Copy)]
 pub union DxeImageProtectionPolicy {
-    pub data: u8,
+    pub data: UINT8,
     pub fields: ImageProtectionFields,
 }
 
@@ -111,16 +113,16 @@ pub union DxeImageProtectionPolicy {
 #[cfg(feature = "cbindgen")]
 pub struct ImageProtectionFields {
     /// cbindgen:bitfield=1
-    pub protect_image_from_unknown: u8,
+    pub protect_image_from_unknown: UINT8,
     /// cbindgen:bitfield=1
-    pub protect_image_from_fv: u8,
+    pub protect_image_from_fv: UINT8,
     /// cbindgen:bitfield=1
-    pub raise_error_if_protection_fails: u8,
+    pub raise_error_if_protection_fails: UINT8,
     /// cbindgen:bitfield=1
-    pub block_images_without_nx_flag: u8,
+    pub block_images_without_nx_flag: UINT8,
 }
 
-pub type DxeMemoryProtectionSettingsVersion = u8;
+pub type DxeMemoryProtectionSettingsVersion = UINT8;
 
 pub const DXE_MEMORY_PROTECTION_SETTINGS_CURRENT_VERSION: DxeMemoryProtectionSettingsVersion = 7;
 
@@ -140,8 +142,8 @@ pub struct DxeMemoryProtectionSettings {
     pub install_memory_attribute_protocol: bool,
 }
 
-pub const HEAP_GUARD_ALIGNED_TO_TAIL: u8 = 0;
-pub const HEAP_GUARD_ALIGNED_TO_HEAD: u8 = 1;
+pub const HEAP_GUARD_ALIGNED_TO_TAIL: UINT8 = 0;
+pub const HEAP_GUARD_ALIGNED_TO_HEAD: UINT8 = 1;
 
 // we need an extern C function to force cbindgen to generate headers
 #[no_mangle]
